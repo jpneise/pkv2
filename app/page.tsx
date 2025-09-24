@@ -77,16 +77,16 @@ function incomeBelow6000(income: string) {
 type Step = 1 | 2 | 3 | 4 | 5; // 5 = Ergebnis
 
 const schemaStep1 = z.object({
-  age: z.number({ required_error: "Bitte Alter wählen" }).min(18).max(80),
+  age: z.coerce.number().min(18).max(80),
   occupation: z.custom<Occupation>((v) => occupationOptions.includes(v as Occupation), { message: "Bitte Beruf wählen" }),
   income: z.string().min(3, "Bitte Einkommen wählen"),
 });
 const schemaStep2 = z.object({ priorities: z.array(z.string()).min(1, "Bitte mindestens eine Priorität wählen") });
 const schemaStep3 = z.object({
-  chronic: z.enum(["ja", "nein"], { required_error: "Bitte auswählen" }),
-  hospital5y: z.enum(["ja", "nein"], { required_error: "Bitte auswählen" }),
-  meds: z.enum(["ja", "nein"], { required_error: "Bitte auswählen" }),
-  openFindings: z.enum(["ja", "nein"], { required_error: "Bitte auswählen" }),
+  chronic: z.enum(["ja", "nein"]),
+  hospital5y: z.enum(["ja", "nein"]),
+  meds: z.enum(["ja", "nein"]),
+  openFindings: z.enum(["ja", "nein"]),
   notes: z.string().max(600).optional(),
 });
 const schemaStep4 = z.object({
@@ -94,7 +94,7 @@ const schemaStep4 = z.object({
   lastName: z.string().min(2, "Bitte Nachnamen eingeben"),
   phone: z.string().min(6, "Bitte Telefonnummer eingeben"),
   email: z.string().email("Bitte gültige E-Mail eingeben"),
-  consent: z.literal(true, { errorMap: () => ({ message: "Bitte Einwilligung erteilen" }) }),
+  consent: z.boolean().refine(v => v === true, { message: "Bitte Einwilligung erteilen" })
 });
 
 const fade = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -10 }, transition: { duration: 0.18 } };
