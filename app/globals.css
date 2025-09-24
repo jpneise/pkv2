@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Sichtbarer Test: der Seitenhintergrund MUSS hellgrau werden */
 html, body { height: 100%; }
-body { @apply antialiased bg-white text-gray-900; }
 body { background: #f1f5f9; }
+
+/* (danach kann wieder hübsch gemacht werden)
+   Tailwind Grundstil:
+   body { @apply antialiased bg-white text-gray-900; } */
