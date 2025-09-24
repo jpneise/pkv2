@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css"; // bleibt – falls die Datei doch greift
+import "./globals.css";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -12,12 +12,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* TEMPORÄR: Tailwind via CDN, damit das Layout sofort styled ist */}
-        <script src="https://cdn.tailwindcss.com"></script>
-      </head>
       <body className={inter.className}>
+        {/* ===== MUSS sichtbar sein ===== */}
+        <div style={{ border: "4px solid red", padding: 8, margin: 8, fontWeight: 600 }}>
+          LAYOUT-TEST: Diese rote Box MUSS erscheinen.
+        </div>
         {children}
       </body>
     </html>
