@@ -8,7 +8,7 @@ import { z } from "zod";
 // UI SHIMS (einfache Tailwind-Komponenten)
 // ======================================
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "default" | "secondary" | "ghost"; asChild?: boolean };
-export function Button({ variant = "default", asChild, className = "", children, ...rest }: ButtonProps) {
+function Button({ variant = "default", asChild, className = "", children, ...rest }: ButtonProps) {
   const base = "inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring disabled:opacity-60";
   const styles = { default: "bg-black text-white hover:opacity-90", secondary: "bg-gray-100 text-gray-800 hover:bg-gray-200", ghost: "bg-transparent text-gray-700 hover:bg-gray-100" } as const;
   const cls = `${base} ${styles[variant]} ${className}`;
@@ -18,17 +18,17 @@ export function Button({ variant = "default", asChild, className = "", children,
   }
   return <button className={cls} {...rest}>{children}</button>;
 }
-export function Card({ className = "", children }: React.HTMLAttributes<HTMLDivElement>) { return <div className={`rounded-2xl border ${className}`}>{children}</div>; }
-export function CardHeader({ className = "", children }: React.HTMLAttributes<HTMLDivElement>) { return <div className={`p-5 ${className}`}>{children}</div>; }
-export function CardTitle({ children }: { children: React.ReactNode }) { return <h2 className="text-xl font-semibold">{children}</h2>; }
-export function CardContent({ className = "", children }: React.HTMLAttributes<HTMLDivElement>) { return <div className={`p-5 pt-0 ${className}`}>{children}</div>; }
-export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) { return <input {...props} className={`w-full rounded-xl border px-3 py-2 ${props.className ?? ""}`} />; }
-export function Label(props: React.LabelHTMLAttributes<HTMLLabelElement>) { return <label {...props} className={`block text-sm font-medium text-gray-700 ${props.className ?? ""}`} />; }
-export function Checkbox({ checked, onCheckedChange, id }: { checked?: boolean; onCheckedChange?: (v: boolean) => void; id?: string }) { return <input id={id} type="checkbox" checked={checked} onChange={(e) => onCheckedChange?.(e.target.checked)} className="h-4 w-4 rounded border-gray-300" />; }
+function Card({ className = "", children }: React.HTMLAttributes<HTMLDivElement>) { return <div className={`rounded-2xl border ${className}`}>{children}</div>; }
+function CardHeader({ className = "", children }: React.HTMLAttributes<HTMLDivElement>) { return <div className={`p-5 ${className}`}>{children}</div>; }
+function CardTitle({ children }: { children: React.ReactNode }) { return <h2 className="text-xl font-semibold">{children}</h2>; }
+function CardContent({ className = "", children }: React.HTMLAttributes<HTMLDivElement>) { return <div className={`p-5 pt-0 ${className}`}>{children}</div>; }
+function Input(props: React.InputHTMLAttributes<HTMLInputElement>) { return <input {...props} className={`w-full rounded-xl border px-3 py-2 ${props.className ?? ""}`} />; }
+function Label(props: React.LabelHTMLAttributes<HTMLLabelElement>) { return <label {...props} className={`block text-sm font-medium text-gray-700 ${props.className ?? ""}`} />; }
+function Checkbox({ checked, onCheckedChange, id }: { checked?: boolean; onCheckedChange?: (v: boolean) => void; id?: string }) { return <input id={id} type="checkbox" checked={checked} onChange={(e) => onCheckedChange?.(e.target.checked)} className="h-4 w-4 rounded border-gray-300" />; }
 
 // RadioGroup (kleiner Context für zusammengehörige Radios)
 const RadioGroupCtx = React.createContext<{ name: string; value?: string; onValueChange: (v: string) => void } | null>(null);
-export function RadioGroup({ value, onValueChange, className = "", children }: { value?: string; onValueChange: (v: string) => void; className?: string; children: React.ReactNode }) {
+function RadioGroup({ value, onValueChange, className = "", children }: { value?: string; onValueChange: (v: string) => void; className?: string; children: React.ReactNode }) {
   const name = useMemo(() => `rg-${Math.random().toString(36).slice(2)}`,[/* no deps */]);
   return (
     <RadioGroupCtx.Provider value={{ name, value, onValueChange }}>
@@ -36,21 +36,21 @@ export function RadioGroup({ value, onValueChange, className = "", children }: {
     </RadioGroupCtx.Provider>
   );
 }
-export function RadioGroupItem({ value, id }: { value: string; id?: string }) {
+function RadioGroupItem({ value, id }: { value: string; id?: string }) {
   const ctx = React.useContext(RadioGroupCtx);
   if (!ctx) return null;
   return (
     <input id={id} type="radio" name={ctx.name} value={value} checked={ctx.value === value} onChange={() => ctx.onValueChange(value)} className="h-4 w-4 border-gray-300" />
   );
 }
-export function Progress({ value = 0, className = "" }: { value?: number; className?: string }) {
+function Progress({ value = 0, className = "" }: { value?: number; className?: string }) {
   return (
     <div className={`w-full overflow-hidden rounded-full bg-gray-100 ${className}`}>
       <div className="h-2 rounded-full bg-black" style={{ width: `${Math.max(0, Math.min(100, value))}%` }} />
     </div>
   );
 }
-export function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) { return <textarea {...props} className={`w-full rounded-xl border px-3 py-2 ${props.className ?? ""}`} />; }
+function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) { return <textarea {...props} className={`w-full rounded-xl border px-3 py-2 ${props.className ?? ""}`} />; }
 
 // ======================================
 // Fachlogik (Scoring & Ampel) + Tests
@@ -74,7 +74,7 @@ function incomeBelow6000(income: string) {
   return new Set(["unter 3.000 €", "3.000–3.999 €", "4.000–4.999 €", "5.000–5.999 €"]).has(income);
 }
 
-export type Step = 1 | 2 | 3 | 4 | 5; // 5 = Ergebnis
+type Step = 1 | 2 | 3 | 4 | 5; // 5 = Ergebnis
 
 const schemaStep1 = z.object({
   age: z.number({ required_error: "Bitte Alter wählen" }).min(18).max(80),
@@ -107,7 +107,7 @@ function Badge({ color = "gray", children }: { color?: "green" | "yellow" | "red
 // --- Reines Scoring (für UI & Tests) ---
 type S1 = z.infer<typeof schemaStep1>;
 type S3 = z.infer<typeof schemaStep3>;
-export function computeScore(s1: S1, s3: S3) {
+function computeScore(s1: S1, s3: S3) {
   let points = 0;
   if (s1.occupation === "Beamter/Beamtin") points += 2;
   if (s1.age >= 18 && s1.age <= 45) points += 1;
@@ -121,7 +121,7 @@ export function computeScore(s1: S1, s3: S3) {
   if (s1.occupation === "Selbstständig" && allHealthy) points += 1;
   return points;
 }
-export function computeBucket(s1: S1, score: number): "green" | "yellow" | "red" {
+function computeBucket(s1: S1, score: number): "green" | "yellow" | "red" {
   if (s1.age > 55) return "red";
   if (s1.occupation === "Angestellt" && incomeBelow6000(s1.income)) return "red";
   if (score >= 2) return "green";
