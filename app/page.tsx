@@ -179,14 +179,14 @@ export default function PKVHealthCheckLandingPage() {
 
   function next<T extends z.ZodTypeAny>(schema: T, data: unknown, target: Step) {
     const parsed = schema.safeParse(data);
-    if (!parsed.success) { setError(parsed.error.errors[0]?.message ?? "Bitte Eingaben prüfen"); return; }
+    if (!parsed.success) { setError(parsed.error.issues[0]?.message ?? "Bitte Eingaben prüfen"); return; }
     setError(null); setStep(target);
   }
   function prev() { setError(null); setStep((s) => Math.max(1, (s - 1) as Step)); }
 
   async function handleSubmit() {
     if (bucket === "red") { setError("Terminbuchung ist bei roter Einschätzung nicht möglich."); return; }
-    const ok4 = schemaStep4.safeParse(s4); if (!ok4.success) { setError(ok4.error.errors[0]?.message ?? "Bitte Eingaben prüfen"); return; }
+    const ok4 = schemaStep4.safeParse(s4); if (!ok4.success) { setError(ok4.error.issues[0]?.message ?? "Bitte Eingaben prüfen"); return; }
     setLoading(true); setError(null);
     const payload = { step1: s1, step2: s2, ...(PRIVACY_MODE ? {} : { step3: s3, scoring: { score, bucket } }), contact: s4, source: typeof window !== "undefined" ? window.location.href : "unknown", timestamp: new Date().toISOString() };
     try {
@@ -295,7 +295,7 @@ export default function PKVHealthCheckLandingPage() {
                         <Button variant="ghost" onClick={prev}><ArrowLeft className="mr-2 h-4 w-4"/>Zurück</Button>
                         <Button onClick={() => {
                           const parsed = schemaStep3.safeParse(s3);
-                          if (!parsed.success) { setError(parsed.error.errors[0]?.message ?? "Bitte Eingaben prüfen"); return; }
+                          if (!parsed.success) { setError(parsed.error.issues[0]?.message ?? "Bitte Eingaben prüfen"); return; }
                           setError(null);
                           if (PRIVACY_MODE) {
                             const hardRed = (s1.age > 55) || (s1.occupation === "Angestellt" && incomeBelow6000(s1.income));
