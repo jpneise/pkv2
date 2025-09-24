@@ -204,9 +204,10 @@ export default function PKVHealthCheckLandingPage() {
       <section className="relative overflow-hidden border-b">
         <div className="mx-auto max-w-6xl px-6 py-16 grid gap-10 md:grid-cols-2 items-center">
           <div>
-            <h1 className="text-5xl font-bold bg-yellow-200 p-4 rounded-xl">
-  TEST 123 — Passt die private Krankenversicherung zu Ihnen?
+         <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
+  Passt die private Krankenversicherung zu Ihnen?
 </h1>
+
 
             <p className="mt-4 text-gray-600 text-lg">Machen Sie den kostenlosen Gesundheits-Check und erfahren Sie in 2 Minuten, ob eine PKV für Sie möglich und sinnvoll ist.</p>
             <div className="mt-6 flex gap-3 text-sm text-gray-600">
