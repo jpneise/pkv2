@@ -205,7 +205,7 @@ export default function PKVHealthCheckLandingPage() {
         <div className="mx-auto max-w-6xl px-6 py-16 grid gap-10 md:grid-cols-2 items-center">
           <div>
          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
-  Passst die private Krankenversicherung zu Ihnen?
+  Passt die private Krankenversicherung zu Ihnen?
 </h1>
 
 
