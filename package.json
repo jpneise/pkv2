@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "framer-motion": "latest",
@@ -16,11 +17,11 @@
     "zod": "latest"
   },
   "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.2.66",
     "autoprefixer": "latest",
     "postcss": "latest",
     "tailwindcss": "latest",
-    "typescript": "5.4.5",
-    "@types/react": "^18.2.66",
-    "@types/node": "^20.14.9"
+    "typescript": "5.4.5"
   }
 }
