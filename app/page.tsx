@@ -182,7 +182,7 @@ export default function PKVHealthCheckLandingPage() {
     if (!parsed.success) { setError(parsed.error.issues[0]?.message ?? "Bitte Eingaben prüfen"); return; }
     setError(null); setStep(target);
   }
-  function prev() { setError(null); setStep((s) => Math.max(1, (s - 1) as Step)); }
+  function prev() { setError(null); setStep((s) => (s > 1 ? ((s - 1) as Step) : (1 as Step))); }
 
   async function handleSubmit() {
     if (bucket === "red") { setError("Terminbuchung ist bei roter Einschätzung nicht möglich."); return; }
