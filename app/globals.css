@@ -4,3 +4,4 @@
 
 html, body { height: 100%; }
 body { @apply antialiased bg-white text-gray-900; }
+body { background: #f1f5f9; } /* Test: hellgrauer Hintergrund */
