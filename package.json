@@ -16,6 +16,8 @@
     "zod": "latest"
   },
   "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/node": "^20.14.9"
     "autoprefixer": "latest",
     "postcss": "latest",
     "tailwindcss": "latest",
